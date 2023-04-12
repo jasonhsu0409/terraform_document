@@ -1,10 +1,9 @@
-
-/*
 // Create rds subnet
 resource "aws_db_subnet_group" "example" {
   name        = "example-rds"
   subnet_ids = [aws_subnet.private[2].id,aws_subnet.private[3].id]
 }
+
 // Create rds
 resource "aws_db_instance" "example" {
   identifier            = "examplerds6689"
@@ -18,8 +17,7 @@ resource "aws_db_instance" "example" {
   password              = var.rds_password
   db_subnet_group_name  = aws_db_subnet_group.example.name
   vpc_security_group_ids = [aws_security_group.rds.id]
-  // avoid deletion error
+  // Avoid deletion error
   skip_final_snapshot = true
 }
 
-*/

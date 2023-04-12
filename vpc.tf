@@ -1,4 +1,4 @@
-  # Create a VPC named "jason-vpc"
+// Create VPC 
 resource "aws_vpc" "example" {
   cidr_block = "10.0.0.0/16"
   enable_dns_hostnames = true
@@ -7,11 +7,11 @@ resource "aws_vpc" "example" {
   }
 }
 
-# Create Subnet資源
+// Create private subnets
 resource "aws_subnet" "private" {
   count = 4
   vpc_id = aws_vpc.example.id
-  // cidr_block = "10.0.${count.index + 1}.0/24"
+  // Another way is using cidr_block = "10.0.${count.index + 1}.0/24"
    cidr_block = element([
     "10.0.1.0/24",
     "10.0.2.0/24",
@@ -25,6 +25,7 @@ resource "aws_subnet" "private" {
   }
 }
 
+// Create public subnets
 resource "aws_subnet" "public" {
   count = 2
   vpc_id = aws_vpc.example.id
@@ -36,28 +37,28 @@ resource "aws_subnet" "public" {
   }
 }
 
-// IGW設定
+// Create igw
 resource "aws_internet_gateway" "example" {
   vpc_id = aws_vpc.example.id
   tags = {
     Name = "example-igw"
   }
 }
-// route table設定
+// Create pubilc route table
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.example.id
   tags = {
     Name = "public-route-table"
   }
 }
-// route table設定
+// Create private route table
 resource "aws_route_table" "private" {
   vpc_id = aws_vpc.example.id
   tags = {
     Name = "private-route-table"
   }
 }
-## route talbe connect
+// Set route talbe associate with subnets
 resource "aws_route_table_association" "private" {
   count = 4
 
@@ -71,25 +72,25 @@ resource "aws_route_table_association" "public" {
   subnet_id      = aws_subnet.public[count.index].id
   route_table_id = aws_route_table.public.id
 }
-// 連結igw
+// Connect igw with route table
 resource "aws_route" "public" {
   route_table_id            = aws_route_table.public.id
   destination_cidr_block    = "0.0.0.0/0"
   gateway_id                = aws_internet_gateway.example.id
 }
 
-// EIP
+// Create EIP
 resource "aws_eip" "nat" {
   vpc = true
 }
-// NAT gateway (1b)
 
+// Create nat gateway 
 resource "aws_nat_gateway" "nat" {
   allocation_id = aws_eip.nat.id
   subnet_id     = aws_subnet.public[1].id
 }
 
-// set nat with private
+// Set nat with private
 resource "aws_route" "private_nat" {
   route_table_id         = aws_route_table.private.id
   destination_cidr_block = "0.0.0.0/0"

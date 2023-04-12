@@ -1,5 +1,4 @@
-
-// create lauch template
+// Create lauch template
 resource "aws_launch_template" "example" {
   name_prefix          = "example-template"
   image_id             = var.ami
@@ -9,7 +8,7 @@ resource "aws_launch_template" "example" {
   iam_instance_profile {
      name = "ec2-acces-s3"
   }
-  // launch template userdata have to read with base64encode
+  // Launch template userdata have to read with base64encode
   user_data = base64encode(<<EOF
 #!/bin/bash
 sudo yum update -y

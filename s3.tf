@@ -2,6 +2,7 @@
 resource "aws_s3_bucket" "example" {
   bucket = "ecloudexample"
   acl    = "public-read"
+  // Set static website
   website {
     index_document = "index.html"
   }

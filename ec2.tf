@@ -20,7 +20,7 @@ resource "aws_instance" "web" {
   vpc_security_group_ids = [aws_security_group.web.id]
   key_name = var.key
   iam_instance_profile = "ec2-acces-s3" 
-  // set httpd & mysql & cloudwatchagent & efs
+  // Set httpd & mysql & cloudwatchagent & efs
   user_data = <<EOF
   #!/bin/bash    
 sudo yum update -y
