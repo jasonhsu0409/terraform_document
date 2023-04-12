@@ -99,7 +99,7 @@ EOF
   tags = {
     Name = "example-web"
   }
-// Ensure instance is create after efs, so we can correctly mount efs to instance 
+// Ensure instance is created after efs, so we can correctly mount efs to instance 
 depends_on = [
  time_sleep.wait_efs 
 ]

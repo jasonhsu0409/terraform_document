@@ -52,7 +52,7 @@ variable "prefix" {
   default = "task-2"
 }
 
-// Set encrpte key
+// Set encrypt key
 variable "key" {
   type = string
   default = "jason-bastion"

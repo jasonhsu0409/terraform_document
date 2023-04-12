@@ -58,7 +58,7 @@ resource "aws_route_table" "private" {
     Name = "private-route-table"
   }
 }
-// Set route talbe associate with subnets
+// Set route table associate with subnets
 resource "aws_route_table_association" "private" {
   count = 4
 

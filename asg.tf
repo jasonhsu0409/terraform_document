@@ -1,4 +1,4 @@
-// Create lauch template
+// Create launch template
 resource "aws_launch_template" "example" {
   name_prefix          = "example-template"
   image_id             = var.ami
@@ -8,7 +8,7 @@ resource "aws_launch_template" "example" {
   iam_instance_profile {
      name = "ec2-acces-s3"
   }
-  // Launch template userdata have to read with base64encode
+  // Launch template user data has to be read with base64encode
   user_data = base64encode(<<EOF
 #!/bin/bash
 sudo yum update -y
@@ -116,7 +116,7 @@ resource "aws_autoscaling_group" "example" {
     value               = "example-asg"
     propagate_at_launch = true
   }
-  // Ensure instance is create after efs, so we can correctly mount efs to instance 
+  // Ensure instance is created after efs, so we can correctly mount efs to instance 
   depends_on = [
    time_sleep.wait_efs
   ]

@@ -1,4 +1,4 @@
-//  Set AWS ID
+// Set AWS ID
 data "aws_caller_identity" "current" {}
 
 // Set region
