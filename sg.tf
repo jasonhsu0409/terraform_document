@@ -96,3 +96,22 @@ resource "aws_security_group" "alb" {
   }
 }
 
+// Create efs sg
+resource "aws_security_group" "efs" {
+  name_prefix = "example-efs"
+  vpc_id = aws_vpc.example.id
+ 
+  egress {
+    from_port = 0
+    to_port = 0
+    protocol = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  
+  ingress {
+    from_port = 2049
+    to_port = 2049
+    protocol = "tcp"
+    security_groups = [aws_security_group.web.id]
+  }
+}

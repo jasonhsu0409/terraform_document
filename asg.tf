@@ -99,7 +99,7 @@ EOF
     )
 }
 
-//create autoscaling_group
+// Create autoscaling_group
 resource "aws_autoscaling_group" "example" {
   name  = "example-asg"
   launch_template {
